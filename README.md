@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="77020.png" alt="Saikou Tech Logo" width="250">
+  <img src="Saikou.tech-wide.png" alt="Saikou Tech Logo" width="250">
 </p>
 
 <h1 align="center">M O D E L 1 0  —  A U D I T  E N G I N E</h1>
