@@ -3,219 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saikou Tech | Model10™ Audit Engine</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Saikou Tech Model10™: The only deterministic AI audit engine with Zero-Hallucination guarantee and SCI Cryptographic Certification.">
+    <title>Saikou Tech | Model10™ Deterministic Audit Engine</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg: #0a0a0c;
+            --bg: #050507;
+            --surface: #0f0f13;
             --primary: #bb86fc;
             --secondary: #03dac6;
-            --accent: #cf6679;
-            --glass: rgba(255, 255, 255, 0.05);
+            --accent: #f471b0;
+            --glass: rgba(15, 15, 19, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             background: var(--bg); 
-            color: #fff; 
-            font-family: 'Inter', -apple-system, sans-serif;
+            color: #e2e2e7; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Background Video Wrapper */
-        .video-bg {
+        /* --- Animated Background Net --- */
+        .bg-grid {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: -1;
-            overflow: hidden;
-        }
-        .video-bg video {
-            min-width: 100%; min-height: 100%;
-            object-fit: cover;
-            opacity: 0.3; /* Subtiel aanwezig */
-            filter: grayscale(100%) brightness(50%);
-        }
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, var(--bg) 80%);
-            z-index: -1;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent);
+            opacity: 0.3;
         }
 
-        /* Nav */
+        /* --- Navigation --- */
         nav {
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 100;
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 10%;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
         }
-        .logo { font-weight: 800; letter-spacing: 2px; font-size: 1.5rem; color: var(--primary); }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 40px; height: auto; border-radius: 4px; }
+        .logo-text { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; color: #fff; }
 
-        /* Hero Section */
-        header {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        /* --- Hero Section --- */
+        .hero {
+            padding: 8rem 10% 4rem;
             text-align: center;
-            padding: 2rem;
+            max-width: 1200px; margin: 0 auto;
         }
-
-        .glitch {
-            font-size: 4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-sub {
-            font-size: 1.2rem;
-            color: #aaa;
-            max-width: 600px;
-            margin-bottom: 2rem;
-        }
-
-        /* Live Audit Simulation */
-        .terminal {
-            background: #000;
+        .badge {
+            background: rgba(187, 134, 252, 0.15);
+            color: var(--primary);
+            padding: 8px 16px; border-radius: 100px;
+            font-size: 0.8rem; font-weight: 700;
+            display: inline-block; margin-bottom: 1.5rem;
             border: 1px solid var(--primary);
-            border-radius: 8px;
-            width: 100%;
-            max-width: 700px;
-            padding: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            box-shadow: 0 0 30px rgba(187, 134, 252, 0.2);
+        }
+        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; font-weight: 800; color: #fff; margin-bottom: 1.5rem; }
+        h1 span { color: var(--secondary); }
+        .hero-sub { font-size: 1.25rem; color: #a1a1aa; max-width: 800px; margin: 0 auto 3rem; }
+
+        /* --- Workflow Visual (SVG Pipeline) --- */
+        .workflow-visual {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem auto;
             position: relative;
             overflow: hidden;
         }
-        .terminal-header { display: flex; gap: 8px; margin-bottom: 15px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
-
-        .typewriter {
-            font-size: 0.9rem;
-            color: var(--secondary);
-            border-right: 2px solid var(--secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typing 4s steps(40) infinite;
+        .pipeline { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .step { 
+            flex: 1; min-width: 200px; padding: 20px; 
+            background: rgba(255,255,255,0.03); border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
         }
+        .step i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        .step h4 { margin-bottom: 10px; color: #fff; }
+        .arrow { color: var(--border); font-size: 1.5rem; }
 
-        @keyframes typing {
-            0% { width: 0; }
-            50% { width: 100%; }
-            90% { width: 100%; }
-            100% { width: 0; }
-        }
+        /* --- Comparison Table --- */
+        .comparison-wrap { padding: 4rem 10%; }
+        table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; }
+        th, td { padding: 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: rgba(255,255,255,0.05); color: var(--secondary); }
+        .check-icon { color: #27c93f; } .x-icon { color: var(--accent); }
 
-        /* CTA Buttons */
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-            display: inline-block;
-            margin: 0.5rem;
-        }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { box-shadow: 0 0 20px var(--primary); transform: translateY(-2px); }
-        .btn-outline { border: 1px solid #555; color: #fff; }
-        .btn-outline:hover { background: var(--glass); }
-
-        /* Features Section */
-        .features {
+        /* --- Pricing Glassmorphism --- */
+        .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 2rem; padding: 4rem 10%;
         }
-        .feature-card {
+        .price-card {
             background: var(--glass);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            padding: 3rem; border-radius: 24px;
+            border: 1px solid var(--border);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
-        .feature-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
-        .feature-card i { font-size: 2rem; color: var(--secondary); margin-bottom: 1rem; }
+        .price-card.featured { border-color: var(--primary); box-shadow: 0 0 40px rgba(187, 134, 252, 0.15); }
+        .price-card:hover { transform: scale(1.03); border-color: var(--secondary); }
+        .price-tag { font-size: 3rem; font-weight: 800; color: #fff; margin: 1.5rem 0; }
+        .price-tag span { font-size: 1rem; color: #71717a; }
+        .feature-list { list-style: none; margin: 2rem 0; text-align: left; }
+        .feature-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
 
-        footer {
-            padding: 4rem 2rem;
-            text-align: center;
-            background: rgba(0,0,0,0.8);
-            border-top: 1px solid #222;
+        /* --- CTA Buttons --- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 1rem 2rem; border-radius: 12px;
+            font-weight: 700; text-decoration: none; transition: 0.3s;
+            cursor: pointer; border: none; font-size: 1rem;
         }
-        .legal-links a { color: #555; margin: 0 10px; text-decoration: none; font-size: 0.9rem; }
-        .legal-links a:hover { color: var(--primary); }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-secondary { background: var(--secondary); color: #000; }
+        .btn-outline { background: transparent; color: #fff; border: 1px solid var(--border); }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
+        footer { padding: 4rem 10%; border-top: 1px solid var(--border); text-align: center; }
+        .footer-links { margin: 2rem 0; display: flex; justify-content: center; gap: 30px; }
+        .footer-links a { color: #71717a; text-decoration: none; }
+        .footer-links a:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .pipeline { flex-direction: column; }
+            .arrow { transform: rotate(90deg); margin: 10px 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-data-clouds-4422-large.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-    </div>
+    <div class="bg-grid"></div>
 
     <nav>
-        <div class="logo">SAIKOU TECH</div>
-        <div>
-            <a href="legal.html" class="btn btn-outline" style="font-size: 0.8rem;">LEGAL</a>
+        <div class="logo-container">
+            <img src="77020.png" alt="Saikou Logo" class="logo-img">
+            <span class="logo-text">SAIKOU TECH</span>
+        </div>
+        <div class="nav-links">
+            <a href="legal.html" class="btn btn-outline" style="padding: 0.6rem 1.2rem; font-size: 0.8rem;">RESOURCES</a>
         </div>
     </nav>
 
-    <header>
-        <h1 class="glitch">Model10™</h1>
-        <p class="hero-sub">Standard AI is a liability. Model10™ is your insurance. The only Audit Engine that refuses to guess and delivers mathematical proof.</p>
+    <header class="hero">
+        <div class="badge"><i class="fas fa-microchip"></i> MODEL10™ ENGINE LIVE</div>
+        <h1>The AI that refuses to <span>guess.</span></h1>
+        <p class="hero-sub">Eliminate AI hallucinations with mathematical certainty. Model10™ is the world's first deterministic audit engine that enforces code integrity via cryptographic SHA-256 certification.</p>
         
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-            </div>
-            <div style="color: #666; margin-bottom: 10px;">// Initializing Model10 Verification...</div>
-            <div class="typewriter">> Checking AST Validator... OK</div>
-            <div style="color: var(--primary); margin-top: 10px;">> SCI-CERTIFICATE ISSUED: SHA-256 [VERIFIED]</div>
-        </div>
-
-        <div style="margin-top: 3rem;">
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
             <a href="https://poe.com/SaikouTech_Model10" class="btn btn-primary">START FREE AUDIT</a>
-            <a href="#tiers" class="btn btn-outline">ENTERPRISE API</a>
+            <button onclick="document.getElementById('pricing').scrollIntoView()" class="btn btn-outline">VIEW API PRICING</button>
         </div>
     </header>
 
-    <section class="features" id="tiers">
-        <div class="feature-card">
-            <i class="fas fa-shield-halved"></i>
-            <h3>Zero-Hallucination</h3>
-            <p>Our 3-layer architecture (AST, ASC, Gateway) ensures that if the AI isn't 100% sure, it remains silent.</p>
+    <section class="comparison-wrap">
+        <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">Standard LLM vs. <span>Model10™</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Standard AI (GPT-4/Claude)</th>
+                    <th>Saikou Model10™</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Operational Mode</td>
+                    <td>Probabilistic (Guessing)</td>
+                    <td>Deterministic (Verifying)</td>
+                </tr>
+                <tr>
+                    <td>Hallucination Risk</td>
+                    <td>High / Unpredictable</td>
+                    <td>0% (By Architecture)</td>
+                </tr>
+                <tr>
+                    <td>Verification</td>
+                    <td>None</td>
+                    <td>SCI™ SHA-256 Certificate</td>
+                </tr>
+                <tr>
+                    <td>Code Compliance</td>
+                    <td>General Advice</td>
+                    <td>AST Structural Validation</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="hero" style="padding-top: 0;">
+        <h2 style="margin-bottom: 2rem;">The Deterministic Pipeline</h2>
+        <div class="workflow-visual">
+            <div class="pipeline">
+                <div class="step">
+                    <i class="fas fa-code"></i>
+                    <h4>AST Validator</h4>
+                    <p style="font-size: 0.8rem; color: #71717a;">Lexical & structural code inspection.</p>
+                </div>
+                <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="step">
+                    <i class="fas fa-user-shield"></i>
+                    <h4>ASC Engine</h4>
+                    <p style="font-size: 0.8rem; color: #71717a;">Adversarial Self-Critique loops.</p>
+                </div>
+                <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="step">
+                    <i class="fas fa-file-signature"></i>
+                    <h4>SCI Output</h4>
+                    <p style="font-size: 0.8rem; color: #71717a;">Cryptographic proof of integrity.</p>
+                </div>
+            </div>
         </div>
-        <div class="feature-card">
-            <i class="fas fa-key"></i>
-            <h3>SCI-Certificates</h3>
-            <p>Every audit is cryptographically sealed with a SHA-256 hash, proving code integrity to your clients.</p>
+    </section>
+
+    <section id="pricing" class="pricing-grid">
+        <div class="price-card">
+            <h3>DEVELOPER</h3>
+            <p style="color: #71717a;">Perfect for individuals</p>
+            <div class="price-tag">$0<span>/forever</span></div>
+            <ul class="feature-list">
+                <li><i class="fas fa-check check-icon"></i> Max 512 Chars</li>
+                <li><i class="fas fa-check check-icon"></i> Standard SCI Check</li>
+                <li><i class="fas fa-check check-icon"></i> Community Support</li>
+            </ul>
+            <a href="https://poe.com/SaikouTech_Model10" class="btn btn-outline" style="width: 100%;">ACCESS FREE</a>
         </div>
-        <div class="feature-card">
-            <i class="fas fa-server"></i>
-            <h3>Zero Retention</h3>
-            <p>We do not store your code. We do not train on your data. Total privacy by design.</p>
+
+        <div class="price-card featured">
+            <div style="position: absolute; top: 15px; right: 20px; color: var(--primary); font-size: 0.7rem; font-weight: 800;">MOST POPULAR</div>
+            <h3>STARTUP</h3>
+            <p style="color: #71717a;">For scaling apps</p>
+            <div class="price-tag">$49<span>/mo</span></div>
+            <ul class="feature-list">
+                <li><i class="fas fa-check check-icon"></i> 50,000 Chars / req</li>
+                <li><i class="fas fa-check check-icon"></i> Full API Access</li>
+                <li><i class="fas fa-check check-icon"></i> RapidAPI Integration</li>
+            </ul>
+            <a href="#" class="btn btn-primary" style="width: 100%;">GET RAPID KEY</a>
+        </div>
+
+        <div class="price-card">
+            <h3>ENTERPRISE</h3>
+            <p style="color: #71717a;">Mission-critical systems</p>
+            <div class="price-tag">Custom</div>
+            <ul class="feature-list">
+                <li><i class="fas fa-check check-icon"></i> Unlimited Payload</li>
+                <li><i class="fas fa-check check-icon"></i> BYOK Support</li>
+                <li><i class="fas fa-check check-icon"></i> Zero Data Retention</li>
+            </ul>
+            <a href="mailto:ceo@saikou.tech" class="btn btn-secondary" style="width: 100%;">CONTACT SALES</a>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 Saikou Tech. The Authority in AI Integrity.</p>
-        <div class="legal-links" style="margin-top: 20px;">
+        <div class="logo-container" style="justify-content: center; margin-bottom: 1rem;">
+            <img src="77020.png" alt="Saikou" style="width: 30px;">
+            <span class="logo-text" style="font-size: 1rem;">SAIKOU TECH</span>
+        </div>
+        <p>© 2026 Saikou Tech. High-Integrity Deterministic Auditing.</p>
+        <div class="footer-links">
             <a href="legal.html#tos">Terms</a>
             <a href="legal.html#privacy">Privacy</a>
             <a href="legal.html#disclaimer">Security</a>
