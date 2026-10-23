@@ -1,285 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Saikou Tech Model10™: The only deterministic AI audit engine with Zero-Hallucination guarantee and SCI Cryptographic Certification.">
-    <title>Saikou Tech | Model10™ Deterministic Audit Engine</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg: #050507;
-            --surface: #0f0f13;
-            --primary: #bb86fc;
-            --secondary: #03dac6;
-            --accent: #f471b0;
-            --glass: rgba(15, 15, 19, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: var(--bg); 
-            color: #e2e2e7; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* --- Animated Background Net --- */
-        .bg-grid {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            mask-image: radial-gradient(circle at 50% 50%, black, transparent);
-            opacity: 0.3;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            position: sticky; top: 0; z-index: 1000;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1.5rem 10%;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo-img { width: 40px; height: auto; border-radius: 4px; }
-        .logo-text { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; color: #fff; }
-
-        /* --- Hero Section --- */
-        .hero {
-            padding: 8rem 10% 4rem;
-            text-align: center;
-            max-width: 1200px; margin: 0 auto;
-        }
-        .badge {
-            background: rgba(187, 134, 252, 0.15);
-            color: var(--primary);
-            padding: 8px 16px; border-radius: 100px;
-            font-size: 0.8rem; font-weight: 700;
-            display: inline-block; margin-bottom: 1.5rem;
-            border: 1px solid var(--primary);
-        }
-        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; font-weight: 800; color: #fff; margin-bottom: 1.5rem; }
-        h1 span { color: var(--secondary); }
-        .hero-sub { font-size: 1.25rem; color: #a1a1aa; max-width: 800px; margin: 0 auto 3rem; }
-
-        /* --- Workflow Visual (SVG Pipeline) --- */
-        .workflow-visual {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 4rem auto;
-            position: relative;
-            overflow: hidden;
-        }
-        .pipeline { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-        .step { 
-            flex: 1; min-width: 200px; padding: 20px; 
-            background: rgba(255,255,255,0.03); border-radius: 12px;
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-        .step i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
-        .step h4 { margin-bottom: 10px; color: #fff; }
-        .arrow { color: var(--border); font-size: 1.5rem; }
-
-        /* --- Comparison Table --- */
-        .comparison-wrap { padding: 4rem 10%; }
-        table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; }
-        th, td { padding: 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
-        th { background: rgba(255,255,255,0.05); color: var(--secondary); }
-        .check-icon { color: #27c93f; } .x-icon { color: var(--accent); }
-
-        /* --- Pricing Glassmorphism --- */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem; padding: 4rem 10%;
-        }
-        .price-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 3rem; border-radius: 24px;
-            border: 1px solid var(--border);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        .price-card.featured { border-color: var(--primary); box-shadow: 0 0 40px rgba(187, 134, 252, 0.15); }
-        .price-card:hover { transform: scale(1.03); border-color: var(--secondary); }
-        .price-tag { font-size: 3rem; font-weight: 800; color: #fff; margin: 1.5rem 0; }
-        .price-tag span { font-size: 1rem; color: #71717a; }
-        .feature-list { list-style: none; margin: 2rem 0; text-align: left; }
-        .feature-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-
-        /* --- CTA Buttons --- */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 1rem 2rem; border-radius: 12px;
-            font-weight: 700; text-decoration: none; transition: 0.3s;
-            cursor: pointer; border: none; font-size: 1rem;
-        }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-secondary { background: var(--secondary); color: #000; }
-        .btn-outline { background: transparent; color: #fff; border: 1px solid var(--border); }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        footer { padding: 4rem 10%; border-top: 1px solid var(--border); text-align: center; }
-        .footer-links { margin: 2rem 0; display: flex; justify-content: center; gap: 30px; }
-        .footer-links a { color: #71717a; text-decoration: none; }
-        .footer-links a:hover { color: var(--primary); }
-
-        @media (max-width: 768px) {
-            .pipeline { flex-direction: column; }
-            .arrow { transform: rotate(90deg); margin: 10px 0; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saikou - being rebuilt / wordt herbouwd</title>
+<meta name="description" content="Saikou is being rebuilt as an open-source verifier for AI-written security fixes. / Saikou wordt herbouwd als open-source verificateur voor door AI geschreven beveiligingsfixes.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="Saikou.tech-favicon.svg" type="image/svg+xml">
+<!-- Published as index.html in interim mode (scripts/stage_site.py), hence the canonical. -->
+<link rel="canonical" href="https://saikou.tech/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Saikou">
+<meta property="og:title" content="Saikou - being rebuilt / wordt herbouwd">
+<meta property="og:description" content="Saikou is being rebuilt as an open-source verifier for AI-written security fixes. / Saikou wordt herbouwd als open-source verificateur voor door AI geschreven beveiligingsfixes.">
+<meta property="og:url" content="https://saikou.tech/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta name="twitter:card" content="summary">
 </head>
 <body>
-
-    <div class="bg-grid"></div>
-
-    <nav>
-        <div class="logo-container">
-            <img src="Saikou.tech-logo-flat-hor.svg" alt="Saikou Logo" class="logo-img">
-            <span class="logo-text">SAIKOU TECH</span>
-        </div>
-        <div class="nav-links">
-            <a href="legal.html" class="btn btn-outline" style="padding: 0.6rem 1.2rem; font-size: 0.8rem;">RESOURCES</a>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <div class="badge"><i class="fas fa-microchip"></i> MODEL10™ ENGINE LIVE</div>
-        <h1>The AI that refuses to <span>guess.</span></h1>
-        <p class="hero-sub">Eliminate AI hallucinations with mathematical certainty. Model10™ is the world's first deterministic audit engine that enforces code integrity via cryptographic SHA-256 certification.</p>
-        
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <a href="https://poe.com/SaikouTech_Model10" class="btn btn-primary">START
-                FREE AUDIT</a>
-            <button onclick="document.getElementById('pricing').scrollIntoView()" class="btn btn-outline">VIEW API PRICING</button>
-        </div>
-    </header>
-
-    <section class="comparison-wrap">
-        <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">Standard LLM vs. <span>Model10™</span></h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Standard AI (GPT-4/Claude)</th>
-                    <th>Saikou Model10™</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Operational Mode</td>
-                    <td>Probabilistic (Guessing)</td>
-                    <td>Deterministic (Verifying)</td>
-                </tr>
-                <tr>
-                    <td>Hallucination Risk</td>
-                    <td>High / Unpredictable</td>
-                    <td>0% (By Architecture)</td>
-                </tr>
-                <tr>
-                    <td>Verification</td>
-                    <td>None</td>
-                    <td>SCI™ SHA-256 Certificate</td>
-                </tr>
-                <tr>
-                    <td>Code Compliance</td>
-                    <td>General Advice</td>
-                    <td>AST Structural Validation</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="hero" style="padding-top: 0;">
-        <h2 style="margin-bottom: 2rem;">The Deterministic Pipeline</h2>
-        <div class="workflow-visual">
-            <div class="pipeline">
-                <div class="step">
-                    <i class="fas fa-code"></i>
-                    <h4>AST Validator</h4>
-                    <p style="font-size: 0.8rem; color: #71717a;">Lexical & structural code inspection.</p>
-                </div>
-                <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-                <div class="step">
-                    <i class="fas fa-user-shield"></i>
-                    <h4>ASC Engine</h4>
-                    <p style="font-size: 0.8rem; color: #71717a;">Adversarial Self-Critique loops.</p>
-                </div>
-                <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-                <div class="step">
-                    <i class="fas fa-file-signature"></i>
-                    <h4>SCI Output</h4>
-                    <p style="font-size: 0.8rem; color: #71717a;">Cryptographic proof of integrity.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="pricing" class="pricing-grid">
-        <div class="price-card">
-            <h3>DEVELOPER</h3>
-            <p style="color: #71717a;">Perfect for individuals</p>
-            <div class="price-tag">$0<span>/forever</span></div>
-            <ul class="feature-list">
-                <li><i class="fas fa-check check-icon"></i> Max 512 Chars</li>
-                <li><i class="fas fa-check check-icon"></i> Standard SCI Check</li>
-                <li><i class="fas fa-check check-icon"></i> Community Support</li>
-            </ul>
-            <a href="https://poe.com/SaikouTech_Model10" class="btn btn-outline" style="width: 100%;">ACCESS FREE</a>
-        </div>
-
-        <div class="price-card featured">
-            <div style="position: absolute; top: 15px; right: 20px; color: var(--primary); font-size: 0.7rem; font-weight: 800;">MOST POPULAR</div>
-            <h3>STARTUP</h3>
-            <p style="color: #71717a;">For scaling apps</p>
-            <div class="price-tag">$49<span>/mo</span></div>
-            <ul class="feature-list">
-                <li><i class="fas fa-check check-icon"></i> 50,000 Chars / req</li>
-                <li><i class="fas fa-check check-icon"></i> Full API Access</li>
-                <li><i class="fas fa-check check-icon"></i> RapidAPI Integration</li>
-            </ul>
-            <a href="#" class="btn btn-primary" style="width: 100%;">GET RAPID KEY</a>
-        </div>
-
-        <div class="price-card">
-            <h3>ENTERPRISE</h3>
-            <p style="color: #71717a;">Mission-critical systems</p>
-            <div class="price-tag">Custom</div>
-            <ul class="feature-list">
-                <li><i class="fas fa-check check-icon"></i> Unlimited Payload</li>
-                <li><i class="fas fa-check check-icon"></i> BYOK Support</li>
-                <li><i class="fas fa-check check-icon"></i> Zero Data Retention</li>
-            </ul>
-            <a href="mailto:ceo@saikou.tech" class="btn btn-secondary" style="width: 100%;">CONTACT SALES</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="logo-container" style="justify-content: center; margin-bottom: 1rem;">
-            <img src="Saikou.tech-logo-flat-hor.svg" alt="Saikou" style="width: 30px;">
-            <span class="logo-text" style="font-size: 1rem;">SAIKOU TECH</span>
-        </div>
-        <p>© 2026 Saikou Tech. High-Integrity Deterministic Auditing.</p>
-        <div class="footer-links">
-            <a href="legal.html#tos">Terms</a>
-            <a href="legal.html#privacy">Privacy</a>
-            <a href="legal.html#disclaimer">Security</a>
-        </div>
-    </footer>
-
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="index.html"><img src="Saikou.tech-logo-flat-hor.svg" alt="Saikou" width="94" height="26"></a>
+  <nav class="nav" aria-label="Main"><a href="legal.html">Legal &amp; privacy</a></nav>
+</div></header>
+<main class="wrap narrow">
+  <section lang="en" style="border-top:none">
+    <p class="eyebrow">Being rebuilt</p>
+    <h1 style="max-width:none">Prove that a security fix is real, not just claimed.</h1>
+    <p class="lede">Saikou is becoming an open-source tool that compares code before and after a claimed security fix and blocks the changes that only <em>look</em> hardened - new <code>nosec</code> comments, sanitised values nobody uses, partial fixes, dropped code. No score, no guarantees, just what was checked and how.</p>
+    <p>The earlier &ldquo;Model10&rdquo; service and the claims made for it are being retired. Nothing on this site depends on it, and those claims no longer apply.</p>
+    <p>Want to follow along, or have a use for it? <a href="mailto:ceo@saikou.tech?subject=Saikou">ceo@saikou.tech</a></p>
+  </section>
+  <section lang="nl">
+    <p class="eyebrow">Wordt herbouwd</p>
+    <h2>Bewijs dat een beveiligingsfix echt is, niet alleen beweerd.</h2>
+    <p>Saikou wordt een open-sourcetool die code v&oacute;&oacute;r en n&aacute; een beweerde beveiligingsfix vergelijkt en wijzigingen blokkeert die alleen <em>lijken</em> te beveiligen &mdash; nieuwe <code>nosec</code>-commentaren, opgeschoonde waarden die niemand gebruikt, halve fixes, weggelaten code. Geen score, geen garanties, alleen wat is gecontroleerd en hoe.</p>
+    <p>De eerdere &ldquo;Model10&rdquo;-dienst en de beweringen daarover worden uitgefaseerd. Niets op deze site hangt ervan af en die beweringen gelden niet meer.</p>
+    <p>Wil je meevolgen, of heb je er een toepassing voor? <a href="mailto:ceo@saikou.tech?subject=Saikou">ceo@saikou.tech</a></p>
+  </section>
+</main>
+<footer><div class="wrap">
+  <span>&copy; 2026 Saikou.</span>
+  <span><a href="legal.html">Legal &amp; privacy / Juridisch &amp; privacy</a></span>
+  <span>No third-party scripts, fonts or trackers.</span>
+</div></footer>
 </body>
 </html>
